@@ -1,6 +1,6 @@
 {
   "name": "firechat",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "homepage": "http://victornguyen75.github.io/firechat",
   "private": true,
   "dependencies": {
