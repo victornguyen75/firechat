@@ -30,7 +30,7 @@ function App() {
     <div className="App">
       <header>
         <h1>🔥This Chat 💬 is Lit🔥</h1>
-          <SignOut />
+        <SignOut />
       </header>
 
       <section>
@@ -45,6 +45,7 @@ function SignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider);
   }
+
   return (
     <button onClick={signInWithGoogle}>Sign in with Google</button>
   );
@@ -59,8 +60,8 @@ function SignOut() {
 function ChatRoom() {
   const dummy = useRef();
   const messagesRef = firestore.collection('messages');
-  const query = messagesRef.orderBy('createAt').limit(25);
-  const [ messages ] = useCollectionData(query, {idField: 'id'});
+  const query = messagesRef.orderBy('createdAt').limit(25);
+  const [ messages ] = useCollectionData(query, { idField: 'id' });
   const [ formValue, setFormValue ] = useState('');
 
   const sendMessage = async e => {
@@ -79,19 +80,17 @@ function ChatRoom() {
     dummy.current.scrollIntoView({ behavior: 'smooth' });
   }
 
-  return (
-    <>
-      <main>
-        {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
-        <div ref={dummy}></div>
-      </main>
+  return (<>
+    <main>
+      {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+      <span ref={dummy}></span>
+    </main>
 
-      <form onSubmit={sendMessage}>
-        <input value={formValue} onChange={e => setFormValue(e.target.value)} placeholder="Say something nice please :)" />
-        <button type="submit" disabled={!formValue}>Enter 🕊️</button>
-      </form>
-    </>
-  );
+    <form onSubmit={sendMessage}>
+      <input value={formValue} onChange={e => setFormValue(e.target.value)} placeholder="Say something nice please :)" />
+      <button type="submit" disabled={!formValue}>Enter 🕊️</button>
+    </form>
+  </>);
 }
 
 function ChatMessage(props) {
@@ -99,12 +98,12 @@ function ChatMessage(props) {
 
   const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
 
-  return (
+  return (<>
     <div className={`message ${messageClass}`}>
       <img alt="userProfilePicture" src={photoURL || 'https://ui-avatars.com/api/?background=random'} />
       <p>{text}</p>
     </div>
-  );
+  </>);
 }
 
 export default App;
