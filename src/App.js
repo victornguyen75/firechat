@@ -88,7 +88,7 @@ function ChatRoom() {
 
       <form onSubmit={sendMessage}>
         <input value={formValue} onChange={e => setFormValue(e.target.value)} placeholder="Say something nice please :)" />
-        <button type="submit">Enter 🕊️</button>
+        <button type="submit" disabled={!formValue}>Enter 🕊️</button>
       </form>
     </>
   );
@@ -101,7 +101,7 @@ function ChatMessage(props) {
 
   return (
     <div className={`message ${messageClass}`}>
-      <img alt="userProfilePicture" src={photoURL} />
+      <img alt="userProfilePicture" src={photoURL || 'https://ui-avatars.com/api/?background=random'} />
       <p>{text}</p>
     </div>
   );
