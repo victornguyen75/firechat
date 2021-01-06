@@ -6,7 +6,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-// Hooks
+// Firebase Hooks
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
@@ -58,7 +58,7 @@ function SignOut() {
 }
 
 function ChatRoom() {
-  const dummy = useRef();
+  const DOM = useRef();
   const messagesRef = firestore.collection('messages');
   const query = messagesRef.orderBy('createdAt').limit(25);
   const [ messages ] = useCollectionData(query, { idField: 'id' });
@@ -77,13 +77,13 @@ function ChatRoom() {
     });
 
     setFormValue('');
-    dummy.current.scrollIntoView({ behavior: 'smooth' });
+    DOM.current.scrollIntoView({ behavior: 'smooth' });
   }
 
   return (<>
     <main>
       {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
-      <span ref={dummy}></span>
+      <span ref={DOM}></span>
     </main>
 
     <form onSubmit={sendMessage}>
